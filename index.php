@@ -18,9 +18,9 @@
       <nav class="main-nav">
         <ul class="main-menu" id="main-menu">
             <li><a href="index.html">Domov</a></li>
-            <li><a href="portfolio.html">Portfólio</a></li>
-            <li><a href="qna.html">Q&A</a></li>
-            <li><a href="kontakt.html">Kontakt</a></li>
+            <li><a href="portfolio.php">Portfólio</a></li>
+            <li><a href="qna.php">Q&A</a></li>
+            <li><a href="kontakt.php">Kontakt</a></li>
         </ul>
         <a class="hamburger" id="hamburger">
             <i class="fa fa-bars"></i>
@@ -58,16 +58,21 @@
       <section class="container">
         <div class="row">
           <div class="col-100 text-center">
-            <?php
-            $hour = date('H');
-            if ($hour < 12) {
-                echo "<h3>Dobré ráno</h3>";
-            } elseif ($hour < 18) {
-            echo "<h3>Dobrý deň</h3>";
-            } else {
-            echo "<h3>Dobrý večer</h3>";
-            }
-            ?>
+
+              <?php
+
+              {
+                  $hour = date('H');
+                  if ($hour < 12) {
+                      echo "<h3>Dobré ráno</h3>";
+                  } elseif ($hour < 18) {
+                      echo "<h3>Dobrý deň</h3>";
+                  } else {
+                      echo "<h3>Dobrý večer</h3>";
+                  }
+              }
+              ?>
+
           </div>
         </div>
       </section>
