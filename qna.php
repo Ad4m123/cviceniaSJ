@@ -40,11 +40,74 @@
         </div>
       </div>
     </section>
+
       <?php
-      include"functions.php";
-      insertQnA();
+      include_once "classes/QnA.php";
+      use otazkyodpovede\QnA;
+
+      $qna = new QnA();
+      // Získanie otázok a odpovedí z databázy
+      $questionsAndAnswers = $qna->getQnA();
       ?>
-    </section>
+
+      <section class="container">
+          <?php if ($questionsAndAnswers): ?>
+              <div class="row">
+                  <div class="col-100 text-center">
+                      <h2>Otázky a odpovede</h2>
+                      <div class="accordion-container">
+                          <?php foreach ($questionsAndAnswers as $qa): ?>
+                              <div class="accordion">
+                                  <div class="question">
+                                      <?php echo htmlspecialchars($qa['otazka']); ?>
+                                  </div>
+                                  <div class="answer">
+                                      <p><?php echo htmlspecialchars($qa['odpoved']); ?></p>
+                                  </div>
+                              </div>
+                          <?php endforeach; ?>
+                      </div>
+                  </div>
+              </div>
+          <?php else: ?>
+              <p>Žiadne otázky a odpovede neboli nájdené.</p>
+          <?php endif; ?>
+      </section>
+
+      <!-- JavaScript pre funkciu akordeónu -->
+      <script>
+          document.addEventListener("DOMContentLoaded", function () {
+              const accordions = document.querySelectorAll('.accordion');
+
+              accordions.forEach(accordion => {
+                  const question = accordion.querySelector('.question');
+                  const answer = accordion.querySelector('.answer');
+
+                  question.addEventListener('click', function () {
+                      // Prepneme triedu 'active' na akordeóne
+                      accordion.classList.toggle('active');
+
+                      // Zobrazíme alebo skryjeme odpoveď v závislosti od aktívnej triedy
+                      if (accordion.classList.contains('active')) {
+                          answer.style.display = 'block';
+                          answer.style.transition = 'height 0.3s ease';  // plynulý prechod
+                      } else {
+                          answer.style.display = 'none';
+                      }
+
+                      // Skryjeme odpovede všetkých ostatných akordeónov
+                      accordions.forEach(otherAccordion => {
+                          if (otherAccordion !== accordion) {
+                              const otherAnswer = otherAccordion.querySelector('.answer');
+                              otherAccordion.classList.remove('active');
+                              otherAnswer.style.display = 'none';
+                          }
+                      });
+                  });
+              });
+          });
+      </script>
+
   </div>
   </main>
   <footer class="container bg-dark text-white">
